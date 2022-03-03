@@ -1,0 +1,1805 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<!--百度统计-->
+<script>
+    var _hmt = _hmt || [];
+    (function() {
+        var hm = document.createElement("script");
+        hm.src = "https://hm.baidu.com/hm.js?550e95b9b23ead3686d77fa44512d7e1";
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+    })();
+</script>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description"
+          content="高颜值免费生物信息在线作图工具,一键绘制生物信息常见图形，如柱状图，堆积柱状图，线图，散点图，直方图，箱线图，韦恩图，集合图，富集分析泡泡图，聚类分析热图，火山图，曼哈顿图，密度图，桑基图等；同时还能进行各种高级分析，并实现可视化，如非限制性主成分分析（主成分分析、主坐标分析），限制性主成分分析，菌群代谢功能预测PICRUST和FAPROTAX，组间差异分析LEFSe，微生物表型预测BugBase等"/>
+    <meta name="keywords"
+          content="柱状图，堆积柱状图，线图，散点图，直方图，箱线图，韦恩图，集合图，富集分析泡泡图，聚类分析热图，火山图，曼哈顿图，密度图，桑基图，主成分分析，主坐标分析，限制性主成分分析，菌群代谢功能预测分析，群落功能预测，组间差异分析，表型预测，扩增子，Amplicon (16S/18S/ITS)，Bar plot, Stacked bar plot, Line plot, Boxplot, heatmap, scatter plot, Density plot, Histogram, volcano plot, enrrichemtn plot, venn diagram, upsetview, PCA, PCoA, cPCoA, Manhattan plot, Sankey diagram, PICRUSt, LEFSe, FAPROTAX, BugBase"/>
+    <meta content="initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, width=device-width"
+          name="viewport">
+    <title>易汉博生物信息在线作图 | Line plot | 线图 </title>
+    <link href="/ImageGP/Public/assets/css/demo-page.css" rel="stylesheet" media="all">
+    <link href="/ImageGP/Public/assets/css/hover.css" rel="stylesheet" media="all">
+    <!--/*弹窗*/-->
+    <link rel="stylesheet" href="/ImageGP/Public/assets/css/fonts/linecons/css/linecons.css">
+    <link rel="stylesheet" href="/ImageGP/Public/assets/css/fonts/fontawesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/ImageGP/Public/assets/css/bootstrap.css">
+    <link rel="stylesheet" href="/ImageGP/Public/assets/css/xenon-core.css">
+    <link rel="stylesheet" href="/ImageGP/Public/assets/css/xenon-forms.css">
+    <link rel="stylesheet" href="/ImageGP/Public/assets/css/xenon-components.css">
+    <link rel="stylesheet" href="/ImageGP/Public/assets/css/xenon-skins.css">
+    <link rel="stylesheet" href="/ImageGP/Public/assets/css/custom.css">
+    <!--外部css-->
+    <link rel="stylesheet" type="text/css" href="/ImageGP/Public/assets/css/index.css" charset="UTF-8"/>
+    <!--<script src="/ImageGP/Public/assets/js/jquery-1.11.1.min.js"></script>-->
+    <script src="https://code.jquery.com/jquery-1.11.3.js"></script>
+    <link rel="stylesheet" href="/ImageGP/Public/assets/css/bootstrap-select.css">
+    <script type="text/javascript" src="/ImageGP/Public/assets/js/bootstrap-select.js"></script>
+    <link rel="stylesheet" href="/ImageGP/Public/assets/css/main.css">
+    <script src="/ImageGP/Public/assets/js/modernizr.js"></script>
+    <script src="/ImageGP/Public/assets/js/main.js"></script>
+    <link rel="stylesheet" type="text/css" href="/ImageGP/Public/assets/css/royalslider.css"/>
+    <link rel="stylesheet" type="text/css" href="/ImageGP/Public/assets/css/rs-default.css"/>
+    <script type="text/javascript" src="/ImageGP/Public/assets/js/jquery.royalslider.min.js"></script>
+    <script>
+        function min1() {
+            if ($('.WF').prop("checked")) {
+                var text = $('#normald').val();
+                var allcon = text.split("\n");
+                var a = allcon.length;
+                if (a < 2) {
+                    layui.use('layer', function () {
+                        var layer = layui.layer;
+                        layer.msg("<b>Error</b>:&nbsp;Data cannot be less than 2 rows.", {
+                            time: 888888,
+                            btn: ['OK']
+                        });
+                    });
+                    return false;
+                }
+            }
+            return true;
+        }
+    </script>
+    <script>
+        function min2() {
+            if ($('.LF').prop("checked")) {
+                var text = $('#long_data_matrix').val();
+                var allcon = text.split("\n");
+                var a = allcon.length;
+                if (a < 2) {
+                    layui.use('layer', function () {
+                        var layer = layui.layer;
+                        layer.msg("<b>Error</b>:&nbsp;Data cannot be less than 2 rows.", {
+                            time: 888888,
+                            btn: ['OK']
+                        });
+                    });
+                    return false;
+                }
+            }
+            return true;
+        }
+    </script>
+    <script>
+        function nb() {
+            var text = $('#normald').val();
+            var allcon = text.split("\n");
+            for (var i = 1; i < allcon.length; i++) {
+                a = allcon[i].split("\t");
+                for (var j = 1; j < a.length; j++) {
+                    var re = /^[+-]?\d+(\.\d+)?$/;
+                    var flag2 = re.test(a[j]);
+                    if (!flag2) {
+                        layui.use('layer', function () {
+                            var layer = layui.layer;
+                            layer.msg("<b>Error</b>:&nbsp;For <b style='color:yellow'>wide</b> format data matrix, all elements except the first row and column <b>must</b> be <b style='color:yellow'>number</b> unless <b style='color:yellow'>long</b> format is used. \n", {
+                                time: 888888,
+                                btn: ['OK']
+                            });
+                        });
+                        return false;
+                    }
+                }
+            }
+            return true;
+        }
+
+        $(function () {
+            firclick();
+            $('#bselect').change(function () {
+                if ($('#s2example3').select2('data').length != 0) {
+                    $('#s2example3').select2('val', '');
+                }
+                firclick();
+            })
+        })
+
+        function getcount() {
+            var flag = $('input[name="matrix_format"]:checked').val();
+            if (flag == 'normal') {
+                var text = $('#normald').val();
+                var allcon = text.split("\n");
+                var firstcol = allcon[0].split("\t");
+                var count = firstcol.length - 1;
+            } else {
+                var text1 = $('#bselect').find("option:selected").text();
+                //
+                var text = $.trim($('#long_data_matrix').val());
+                var allcon = text.split("\n");
+                var firstrow = allcon[0].split("\t");
+                var tmpnum = '';
+                for (var m = 0; m < firstrow.length; m++) {
+                    if (firstrow[m] == text1) {
+                        tmpnum = m;
+                    }
+                }
+                if (tmpnum === '') {
+                    return false;
+                } else {
+                    var firstcol = new Array();
+                    var k = 0;
+                    for (var j = 0; j < allcon.length; j++) {
+                        var tmpstr = allcon[j].split("\t");
+                        var flag = $.inArray(tmpstr[tmpnum], firstcol);
+                        if (flag < 0 && $.trim(tmpstr[tmpnum]) != '') {
+                            firstcol[k] = tmpstr[tmpnum];
+                            k++;
+                        }
+                    }
+                    var count = firstcol.length - 1;
+                }
+            }
+            return count;
+        }
+
+        function popup() {
+            var count1 = getcount();
+            $('#s2example3').select2({
+                //placeholder: 'Select country...',
+                allowClear: true,
+                closeOnSelect: false,
+                minimumResultsForSearch: -1, // Hide the search bar
+                maximumSelectionSize: count1,
+                formatResult: function (state) {
+                    return '<div style="background:url(/ImageGP/Public/assets/images/' + state.id + '.png) no-repeat center center;background-size:100%;display:inline-block;position:relative;width:20px;height:13px;margin-right: 5px;top:2px;"></div>'
+                        + state.text;
+                }
+            }).on('select2-open', function () {
+                $('#s2example3').data('select2').results.addClass('overflow-hidden').perfectScrollbar();
+            })
+        }
+
+        function popup1() {
+            var count1 = getcount();
+            var count2 = $('#s2example3').select2("data").length;
+            //console.log(count1);
+            //console.log(count2);
+            if (count1 != count2) {
+                if (count1 == false) {
+                    if (count2 != 0) {
+                        $('#s2example3').select2('val', '');
+                    }
+                    layui.use('layer', function () {
+                        var layer = layui.layer;
+                        layer.msg('Please select <em>Legend variable</em> first.', {
+                            time: 888888,
+                            btn: ['OK']
+                        });
+                    });
+                } else {
+                    layui.use('layer', function () {
+                        var layer = layui.layer;
+                        layer.msg('<b>' + count1 + ' colors</b> should be chose in this drop-down box.', {
+                            time: 888888,
+                            btn: ['OK']
+                        });
+                    });
+                }
+            }
+        }
+
+        function firclick() {
+            $('#s2example3').one('click', function () {
+                popup();
+                popup1();
+            })
+        }
+    </script>
+    <script>
+        $(function () {
+            $("[data-toggle='tooltip']").tooltip({
+                trigger: 'hover',
+                html: true,
+                container: 'body'
+            });
+        });
+        $(function () {
+            $("[data-toggle='popover']").popover({
+                trigger: 'focus',
+                html: true,
+                container: 'body'
+            });
+        });
+    </script>
+</head>
+<body class="page-body">
+<div class="settings-pane">
+    <a href="#" data-toggle="settings-pane" data-animate="true">
+        &times;
+    </a>
+    <div class="settings-pane-inner">
+        <div class="row">
+            <div class="col-md-4">
+                <div class="user-info">
+                    <div class="user-image">
+                        <a href="http://www.ehbio.com">
+                            <img alt="易汉博生物信息在线作图 | Line plot | 线图" src="/ImageGP/Public/assets/images/user-2.png"
+                                 class="img-responsive img-circle"/>
+                        </a>
+                    </div>
+                    <div class="user-details">
+                        <h3>
+                            <a href="http://www.ehbio.com">EHBio</a>
+                            <!--<span class="user-status is-online"></span>-->
+                        </h3>
+                        <p class="user-title">vip@ehbio.com</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-8">
+                <p style="text-align: justify">EHBIO gene technology is founded by Doctors graduated from Chinese
+                    Academy of Sciences and WuHan University. Former government officer and Chief scientist of Chinese
+                    Academy of Sceinces in chanrge of company operation. We focus on applying the latest and most
+                    accurate bioinformatics technology to deal with the big data in basic research and medical research.
+                    Our talented team members include EHBIO gene technology (Beijing) co., LTD., is founded by bases on
+                    scientific research service, to escort health mission, with deep research accumulation and exquisite
+                    bioinformatics analysis technology, is committed to promoting the development of scientific research
+                    and medical treatment.
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="page-container">
+    <div class="sidebar-menu toggle-others fixed">
+        <div class="sidebar-menu-inner">
+            <header class="logo-env">
+                <!-- logo -->
+                <div class="logo">
+                    <a href="/ImageGP/index.php/Home/Index/index.html" class="logo-expanded">
+                        <img alt="易汉博生物信息在线作图 | Line plot | 线图" src="/ImageGP/Public/assets/images/logo@2x.png" width="200"/>
+                    </a>
+                    <a href="" class="logo-collapsed">
+                        <img alt="易汉博生物信息在线作图 | Line plot | 线图" src="/ImageGP/Public/assets/images/logo-collapsed@2x.png"
+                             width="40"/>
+                    </a>
+                </div>
+                <div class="mobile-menu-toggle visible-xs">
+                    <a href="#" data-toggle="mobile-menu">
+                        <i class="fa-bars"></i>
+                    </a>
+                </div>
+                <div class="settings-icon" style="top: 18px;right: 5px;">
+                    <a href="#" data-toggle="settings-pane" data-animate="true">
+                        <i class="fa-hand-o-up"></i>
+                    </a>
+                </div>
+            </header>
+            <!--Top menu-->
+            <script src="/ImageGP/Public/assets/js/layui/layui.js"></script>
+<ul id="main-menu" class="main-menu">
+    <li >
+        <a href="/ImageGP/index.php/Home/Index/index.html">
+            <i class="fa-home" style="font-size: 20px;"></i>
+            <span class="title"  >Home
+							</span>
+        </a>
+    </li>
+    <li >
+        <a href="/ImageGP/index.php/Home/Index/Lineplot.html">
+            <i class="fa-line-chart"></i>
+            <span class="title"  >Line plot
+							</span>
+        </a>
+    </li>
+    <li >
+        <a href="/ImageGP/index.php/Home/Index/GOenrichmentplot.html">
+            <!--<a href="/ImageGP/index.php/Home/Index/GOenrichmentplot.html">-->
+            <img  alt="易汉博生物信息在线作图 | GO Enrichment Plot | 泡泡图 "  src="/ImageGP/Public/assets/images/Go.png" height="15px" >
+            <span class="title"  >GO Enrichment plot</span>
+        </a>
+    </li>
+    <li >
+        <a href="/ImageGP/index.php/Home/Index/PHeatmap.html">
+            <img  alt="易汉博生物信息在线作图 | Pretty Heatmap | 热图 "  src="/ImageGP/Public/assets/images/PH1.png" height="15px" >
+            <span class="title"  >Pretty Heatmap</span>
+        </a>
+    </li>
+    <li>
+        <a href="/ImageGP/index.php/Home/Index/Boxplot.html">
+            <!--<a href="/ImageGP/index.php/Home/Index/Boxplot.html">-->
+            <img  alt="易汉博生物信息在线作图 | Boxplot | 箱线图 "  src="/ImageGP/Public/assets/images/box.png" height="15px" >
+            <span class="title"  >Boxplot</span>
+        </a>
+    </li>
+    <li>
+        <a href="/ImageGP/index.php/Home/Index/Scatterplot.html">
+            <!--<a href="/ImageGP/index.php/Home/Index/Scatterplot.html">-->
+            <img  alt="易汉博生物信息在线作图 | Scatter plot | 散点图"  src="/ImageGP/Public/assets/images/scatter.png" height="15px" >
+            <span class="title"  >Scatter plot</span>
+        </a>
+    </li>
+    <li>
+        <a href="/ImageGP/index.php/Home/Index/Barplot.html">
+            <!--<a href="/ImageGP/index.php/Home/Index/Barplot.html">-->
+            <img  alt="易汉博生物信息在线作图 | Bar plot | 柱状图"  src="/ImageGP/Public/assets/images/bar.png" height="15px" >
+            <span class="title"  >Bar plot</span>
+        </a>
+    </li>
+    <li>
+        <a href="/ImageGP/index.php/Home/Index/Volcanoplot.html">
+            <!--<a href="/ImageGP/index.php/Home/Index/Volcanoplot.html">-->
+            <img  alt="易汉博生物信息在线作图 | Volcano plot | 火山图 "  src="/ImageGP/Public/assets/images/volcano.png" height="15px" >
+            <span class="title"  >Volcano plot</span>
+        </a>
+    </li>
+    <li>
+        <a href="/ImageGP/index.php/Home/Index/Manhattanplot.html">
+            <!--<a href="/ImageGP/index.php/Home/Index/Volcanoplot.html">-->
+            <img  alt="易汉博生物信息在线作图 | Manhattan plot | 曼哈顿图"  src="/ImageGP/Public/assets/images/Man.png" height="15px" >
+            <span class="title"  >Manhattan plot</span>
+            <!--<span class="label label-purple pull-right hidden-collapsed">beta</span>-->
+        </a>
+    </li>
+    <li>
+        <a href="/ImageGP/index.php/Home/Index/Histogram.html">
+            <!--<a href="/ImageGP/index.php/Home/Index/Histogram.html">-->
+            <img  alt="易汉博生物信息在线作图 | Histogram | 直方图 "  src="/ImageGP/Public/assets/images/histogram.png" height="15px" >
+            <span class="title"   >Histogram</span>
+        </a>
+    </li>
+    <li>
+        <a href="/ImageGP/index.php/Home/Index/VennDiagram.html">
+            <!--<a href="/ImageGP/index.php/Home/Index/VennDiagram.html">-->
+            <img  alt="易汉博生物信息在线作图 | VennDiagram plot | 维恩图 "  src="/ImageGP/Public/assets/images/vd.png" height="15px" >
+            <span class="title"  >VennDiagram</span>
+        </a>
+    </li>
+    <li>
+        <a href="/ImageGP/index.php/Home/Index/UpsetView.html">
+            <!--<a href="/ImageGP/index.php/Home/Index/UpsetView.html">-->
+            <img  alt="易汉博生物信息在线作图 | UpsetView"  src="/ImageGP/Public/assets/images/uv.png" height="15px" >
+            <span class="title"   >UpsetView</span>
+        </a>
+    </li>
+    <li>
+        <a  href="/ImageGP/index.php/Home/Index/Densityplot.html">
+            <!--<a href="/ImageGP/index.php/Home/Index/DensityPLot.html">-->
+            <img  alt="易汉博生物信息在线作图 | Density plot | 密度图 "  src="/ImageGP/Public/assets/images/density.png" height="15px" >
+            <span class="title"   >Density plot</span>
+        </a>
+    </li>
+    <li>
+        <a  href="/ImageGP/index.php/Home/Index/PCAplot.html">
+            <img  alt="易汉博生物信息在线作图 | PCA plot "  src="/ImageGP/Public/assets/images/pca.png" height="15px" >
+            <span class="title" >PCA plot</span>
+        </a>
+    </li>
+    <li>
+        <a  href="/ImageGP/index.php/Home/Index/PCoAplot.html">
+            <img  alt="易汉博生物信息在线作图 | PCoA plot "  src="/ImageGP/Public/assets/images/pca.png" height="15px" >
+            <span class="title" >PCoA plot</span>
+            <!--<span class="label label-purple pull-right hidden-collapsed">beta</span>-->
+        </a>
+    </li>
+    <li>
+        <a  href="/ImageGP/index.php/Home/Index/CPCoAplot.html">
+            <img  alt="易汉博生物信息在线作图 | CPCoA plot "  src="/ImageGP/Public/assets/images/pca.png" height="15px" >
+            <span class="title" >CPCoA plot</span>
+            <!--<span class="label label-purple pull-right hidden-collapsed">beta</span>-->
+        </a>
+    </li>
+    <li>
+        <a  href="/ImageGP/index.php/Home/Index/Sankey.html">
+            <img  alt="易汉博生物信息在线作图 | Sankey | 桑基图 "  src="/ImageGP/Public/assets/images/sst.png" height="15px" >
+            <span class="title" >Sankey</span>
+            <!--<span class="label label-purple pull-right hidden-collapsed">beta</span>-->
+        </a>
+    </li>
+    <li>
+        <a  href="/ImageGP/index.php/Home/Index/PiCrust.html">
+            <img  alt="易汉博生物信息在线作图 | PICRUSt"  src="/ImageGP/Public/assets/images/pi.png" height="15px" >
+            <span class="title" >PICRUSt</span>
+            <!--<span class="label label-purple pull-right hidden-collapsed">beta</span>-->
+        </a>
+    </li>
+    <li>
+        <a  href="/ImageGP/index.php/Home/Index/LEFSe.html">
+            <img  alt="易汉博生物信息在线作图 | LEFSe"  src="/ImageGP/Public/assets/images/le.png" height="15px" >
+            <span class="title" >LEFSe</span>
+            <!--<span class="label label-purple pull-right hidden-collapsed">beta</span>-->
+        </a>
+    </li>
+    <li>
+        <a  href="/ImageGP/index.php/Home/Index/FAPROTAX.html">
+            <img  alt="易汉博生物信息在线作图 | LEFSe"  src="/ImageGP/Public/assets/images/FA.png" height="15px" >
+            <span class="title" >FAPROTAX</span>
+            <!--<span class="label label-purple pull-right hidden-collapsed">beta</span>-->
+        </a>
+    </li>
+    <li>
+        <a  href="/ImageGP/index.php/Home/Index/BugBase.html">
+            <img  alt="易汉博生物信息在线作图 | LEFSe"  src="/ImageGP/Public/assets/images/Bu.png" height="15px" >
+            <span class="title" >BugBase</span>
+            <!--<span class="label label-purple pull-right hidden-collapsed">beta</span>-->
+        </a>
+    </li>
+    <li>
+        <a href="/ImageGP/index.php/Home/Index/Feedback.html">
+            <i class="fa-pencil"></i>
+            <span class="title"   >Problem Feedback</span>
+            <span class="label label-purple pull-right hidden-collapsed">反馈建议</span>
+        </a>
+    </li>
+    <li >
+        <a href="/ImageGP/index.php/Home/Index/Manuals.html">
+            <i class="fa-search"></i>
+            <span class="title"   >Manuals
+							</span>
+        </a>
+    </li>
+    <li>
+        <a href="/ImageGP/index.php/Home/Index/FAQ.html">
+            <i class="fa-info-circle"></i>
+            <span class="title">FAQ</span>
+        </a>
+    </li>
+    <li>
+        <a  target="_blank" href="http://www.ehbio.com/Training/index.php/Home/Index/Articles.html">
+            <i class="fa-info-circle"  style="display: none !important;"></i>
+            <!--<span class="title"  style="color: yellow">Bioinformatics materials</span>-->
+            <span class="label label-purple pull-right hidden-collapsed" style="background: yellow !important;border-radius: 20px;color: #000 !important;float: none !important;">Bioinformatics materials</span>
+        </a>
+    </li>
+</ul>
+<style>
+    .sidebar-menu .main-menu li.active > a{
+        color: yellow;
+    }
+</style>
+<script>
+    $(document).ready(function () {
+        $(function () {
+            $("#imgsx").on("click", function () {
+                var slider = $(".royalSlider").data('royalSlider');
+                slider.updateSliderSize(true);
+            })
+        });
+    })
+</script>
+<script>
+    $(function () {
+        $(".main-menu").find("li").each(function () {
+            var a = $(this).find("a:first")[0];
+            if ($(a).attr("href") === location.pathname) {
+                $(this).addClass("active");
+            } else {
+                $(this).removeClass("active");
+            }
+        });
+    })
+</script>
+        </div>
+    </div>
+    <div class="main-content">
+        <nav class="navbar user-info-navbar" role="navigation">
+            <ul class="user-info-menu left-links list-inline list-unstyled">
+                <li class="hidden-sm hidden-xs">
+                    <a href="#" id="imgsx" data-toggle="sidebar">
+                        <i class="fa-bars"></i>
+                    </a>
+                </li>
+            </ul>
+            <!-- Middle links for user info navbar -->
+            <ul class="user-info-menu middle-links list-inline list-unstyled">
+                <li class="hidden-sm hidden-xs">
+                    <a href="#">
+							<span>
+								Make plot be easy and exquisite
+							</span>
+                    </a>
+                </li>
+            </ul>
+            <ul class="user-info-menu right-links list-inline list-unstyled">
+                <li class="dropdown user-profile">
+                    <a href="#" data-toggle="dropdown">
+							<span>
+								ehbio
+								<i class="fa-angle-down"></i>
+							</span>
+                    </a>
+                    <ul class="dropdown-menu user-profile-menu list-unstyled">
+                        <li>
+                            <a href="#profile">
+                                <i class="fa-user"></i>
+                                Profile
+                            </a>
+                        </li>
+                        <li class="last">
+                            <a href="/ImageGP/index.php/Home/Login/logout.html">
+                                <i class="fa-lock"></i>
+                                Logout
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </nav>
+        <div class="page-title">
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="title-env">
+                        <div class="title" style="float: left;width: 232px;">Line plot</div>
+                        <p class="description" style="margin-left: 20px"></p>
+                    </div>
+                    <head>
+<!--滚动-->
+<link rel="stylesheet" href="/ImageGP/Public/assets/js/libs/style.css">
+<link rel="stylesheet" href="/ImageGP/Public/assets/js/libs/theme.css">
+<script src="/ImageGP/Public/assets/js/libs/jquery.tickerNews.js"></script>
+
+</head>
+
+
+
+
+<div class="TickerNews" id="T1">
+    <div class="ti_wrapper">
+        <div class="ti_slide">
+            <div class="ti_content" >
+                <div class="ti_news" style="font-size: 16px !important;"><a href="http://www.ehbio.com/Training?imageGP" target="_blank"><i class="fa-flag text-gradient1"></i>&nbsp;&nbsp;<span><b class="text-gradient1">生信宝典组织中科院一线人员开展生信实战研讨班，9天学会生信分析 (点击详情，免费获得教程和视频) </b>&nbsp;</span></a></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+                </div>
+            </div>
+        </div>
+        <!--轮播-->
+        <div class="row" style="margin-bottom: 20px" style="border: 0 !important;">
+            <div class="col-sm-12" style="border: 0 !important;">
+                <div id="gallery-1" class="royalSlider rsDefault" style="border: 0 !important;">
+                    <a class="rsImg bugaga" data-rsbigimg="/ImageGP/Public/assets/images/Line_1.png"
+                       href="/ImageGP/Public/assets/images/Line_1.png" style="border: 0 !important;">
+                        <img alt="易汉博生物信息在线作图 | Line plot | 线图" class="rsTmb" src="/ImageGP/Public/assets/images/Line_1.png"
+                             style="border: 0 !important;">
+                    </a>
+                    <a class="rsImg" data-rsbigimg="/ImageGP/Public/assets/images/Line_2.png"
+                       href="/ImageGP/Public/assets/images/Line_2.png" style="border: 0 !important;">
+                        <img alt="易汉博生物信息在线作图 | Line plot | 线图" class="rsTmb" src="/ImageGP/Public/assets/images/Line_2.png"
+                             style="border: 0 !important;">
+                    </a>
+                    <a class="rsImg" data-rsbigimg="/ImageGP/Public/assets/images/Line_3.png"
+                       href="/ImageGP/Public/assets/images/Line_3.png" style="border: 0 !important;">
+                        <img alt="易汉博生物信息在线作图 | Line plot | 线图" class="rsTmb" src="/ImageGP/Public/assets/images/Line_3.png"
+                             style="border: 0 !important;">
+                    </a>
+                    <a class="rsImg" data-rsbigimg="/ImageGP/Public/assets/images/Line_4.png"
+                       href="/ImageGP/Public/assets/images/Line_4.png" style="border: 0 !important;">
+                        <img alt="易汉博生物信息在线作图 | Line plot | 线图" class="rsTmb" src="/ImageGP/Public/assets/images/Line_4.png"
+                             style="border: 0 !important;">
+                    </a>
+                    <a class="rsImg" data-rsbigimg="/ImageGP/Public/assets/images/data.png"
+                       href="/ImageGP/Public/assets/images/data.png" style="border: 0 !important;">
+                        <img alt="易汉博生物信息在线作图 | Line plot | 线图" class="rsTmb" src="/ImageGP/Public/assets/images/data.png"
+                             style="border: 0 !important;">
+                    </a>
+                </div>
+            </div>
+        </div>
+        <form role="form" runat="server" enctype="multipart/form-data" class="form-horizontal" action="/ImageGP/index.php/Home/Index/Lineplot.html"
+              method="post">
+            <!--模块开始1-->
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <div class="row">
+                                <h3 class="panel-title topp" style="float: left;display: block">Please choose suitable
+                                    format and paste your data matrix below (tab separated text file) </h3>
+                                <style>
+                                    #demo {
+                                        height: 32px;
+                                        width: 90px;
+                                        line-height: 7px;
+                                        background: #0c4174 !important;
+                                        font-size: 13px;
+                                    }
+                                </style>
+                                <button class="hvr-float-shadow" id="demo" type="button"
+                                        style="float:right;background: rgba(255, 0, 0, 0);border: 0 !important;">Demo
+                                </button>
+                            </div>
+                        </div>
+                        <div class="panel-body">
+                            <div class="form-group">
+                                <div class="col-sm-12">
+                                    <div class="row" style="margin-left: 0px;">
+                                        <label class="col-sm-3 " style="font-weight: 700;line-height: 32px">Matrix
+                                            format</label>
+                                        <div class="col-sm-4" style="text-align: left !important;">
+                                            <label id="ge1">
+                                                <input class="checked-boom WF" type="radio" onClick="hqzf(1)"
+                                                       name="matrix_format" value="normal" checked>
+                                                Wide format</label>
+                                        </div>
+                                        <script>
+                                            $(function () {
+                                                $('#demo').click(function () {
+                                                    $(".LF").prop("checked", true);
+                                                });
+                                                /*
+                                                                                                $("#normald").change(function(){
+                                                    alert("Please login first!");
+                                                    return false;
+                                                })
+                                                $("#long_data_matrix").change(function(){
+                                                    alert("Please login first!");
+                                                    return false;
+                                                })
+                                                                                                */
+                                            });
+                                            $(function () {
+                                                $('.WF').click(function () {
+                                                    $(".hh").prop("checked", true);
+                                                });
+                                            });
+                                            $(document).ready(function () {
+                                                $('.LF').click(function () {
+                                                    $('#function').css("display", "none");
+                                                    $('#coor').css("display", "block");
+                                                    $('.hd').attr("disabled", "none");
+                                                    $('.xing').css("display", "block");
+                                                    $(".rm").removeClass("collapsed");
+                                                    firclick();
+                                                    if ($('#s2example3').select2('data').length != 0) {
+                                                        $('#s2example3').select2('val', '');
+                                                    }
+                                                    //popup();
+                                                })
+                                                $('.WF').click(function () {
+                                                    $('.xlakz').attr("disabled", true);
+                                                    $('.xlbkz').attr("disabled", true);
+                                                    $('.xlckz').attr("disabled", true);
+                                                    $("#s2example").val("").select2();
+                                                    $("#s2example1").val("").select2();
+                                                    $("#s2example2").val("").select2();
+                                                    firclick();
+                                                    if ($('#s2example3').select2('data').length != 0) {
+                                                        $('#s2example3').select2('val', '');
+                                                    }
+                                                    //popup();
+                                                })
+                                            })
+                                        </script>
+                                        <div class="col-sm-4" style="text-align: left !important;">
+                                            <label id="ge2">
+                                                <input class="checked-boom LF" type="radio" onClick="hqzf(2)"
+                                                       name="matrix_format" value="long">
+                                                Long format</label>
+                                        </div>
+                                    </div>
+                                    <script>
+                                        function same(a = 0) {
+                                            if ($('.WF').prop("checked")) {
+                                                var text = $('#normald').val();
+                                                var allcon = text.split("\n");
+                                                var firstcol = allcon[0].split("\t");
+                                                var ary = firstcol;
+                                                var nary = ary.sort();
+                                                for (var i = 0; i < nary.length - 1; i++) {
+                                                    if (nary[i] == nary[i + 1]) {
+                                                        if (a == 1) {
+                                                            return false;
+                                                        } else {
+                                                            layui.use('layer', function () {
+                                                                var layer = layui.layer;
+                                                                layer.msg("<b>Error</b>:&nbsp;Duplicate contents <b style=\"color:yellow;\">" + "(" + nary[i] + ")" + "</b>" + "&nbsp;are not allowed in the first row.", {
+                                                                    time: 888888,
+                                                                    btn: ['OK']
+                                                                });
+                                                            });
+                                                            return false;
+                                                            // alert("Repeat content is not allowed:" + nary[i]);
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                            return true;
+                                        }
+
+                                        function sameb(a = 0) {
+                                            if ($('.LF').prop("checked")) {
+                                                var text = $('#long_data_matrix').val();
+                                                var allcon = text.split("\n");
+                                                var firstcol = allcon[0].split("\t");
+                                                var ary = firstcol;
+                                                var nary = ary.sort();
+                                                for (var i = 0; i < nary.length - 1; i++) {
+                                                    if (nary[i] == nary[i + 1]) {
+                                                        if (a == 1) {
+                                                            return false;
+                                                        } else {
+                                                            layui.use('layer', function () {
+                                                                var layer = layui.layer;
+                                                                layer.msg("<b>Error</b>:&nbsp;Duplicate contents <b style=\"color:yellow;\">" + "(" + nary[i] + ")" + "</b>" + "&nbsp;are not allowed in the first row.", {
+                                                                    time: 888888,
+                                                                    btn: ['OK']
+                                                                });
+                                                            });
+                                                            return false;
+                                                            // alert("Repeat content is not allowed:" + nary[i]);
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                            return true;
+                                        }
+
+                                        $(document).ready(function () {
+                                            $('#normald').blur(function () {
+                                                same();
+                                                min1()
+                                                hqzf(1);
+                                                $("#aselect").attr("disabled", "disabled");
+                                                $("#bselect").attr("disabled", "disabled");
+                                                $("#cselect").attr("disabled", "disabled");
+                                                $("#dselect").attr("disabled", "disabled");
+                                            })
+                                            $('#long_data_matrix').blur(function () {
+                                                min2()
+                                                sameb();
+                                            })
+                                        })
+                                    </script>
+                                    <!--判断非法字符#DIV/0!-->
+                                    <script>
+                                        function DIVN(a = 0) {
+                                            if ($('.WF').prop("checked")) {
+                                                var text = $('#normald').val();
+                                                var allcon = text.split("\n");
+                                                // var firstcol=allcon[0].split("\t");
+                                                // var firstcol=new Array();
+                                                for (var i = 0; i < allcon.length; i++) {
+                                                    // firstcol[i]= allcon[i].split('\t');
+                                                    a = allcon[i].split('\t');
+                                                    var nihao = "#DIV/0!";
+                                                    for (var j = 0; j < a.length; j++) {
+                                                        // alert(allcon[i]);
+                                                        if (a[j] === nihao) {
+                                                            if (a == 1) {
+                                                                return false;
+                                                            } else {
+                                                                layui.use('layer', function () {
+                                                                    var layer = layui.layer;
+                                                                    layer.msg("<b>Error</b>:&nbsp;Illegal content<b style=\"color:yellow;\">&nbsp;&nbsp;#DIV/0!.</b>", {
+                                                                        time: 888888,
+                                                                        btn: ['OK']
+                                                                    });
+                                                                });
+                                                                return false;
+                                                            }
+                                                        }
+                                                    }
+                                                    // alert(firstcol);
+                                                }
+                                            }
+                                            return true;
+                                        }
+
+                                        function DIVL(a = 0) {
+                                            if ($('.LF').prop("checked")) {
+                                                var text = $('#long_data_matrix').val();
+                                                var allcon = text.split("\n");
+                                                // var firstcol=allcon[0].split("\t");
+                                                // var firstcol=new Array();
+                                                for (var i = 0; i < allcon.length; i++) {
+                                                    // firstcol[i]= allcon[i].split('\t');
+                                                    a = allcon[i].split('\t');
+                                                    var nihao = "#DIV/0!";
+                                                    for (var j = 0; j < a.length; j++) {
+                                                        // alert(allcon[i]);
+                                                        if (a[j] === nihao) {
+                                                            if (a == 1) {
+                                                                return false;
+                                                            } else {
+                                                                layui.use('layer', function () {
+                                                                    var layer = layui.layer;
+                                                                    layer.msg("<b>Error</b>:&nbsp;Illegal content<b style=\"color:yellow;\">&nbsp;&nbsp;#DIV/0!.</b>", {
+                                                                        time: 888888,
+                                                                        btn: ['OK']
+                                                                    });
+                                                                });
+                                                                return false;
+                                                            }
+                                                        }
+                                                    }
+                                                    // alert(firstcol);
+                                                }
+                                            }
+                                            return true;
+                                        }
+
+                                        $(document).ready(function () {
+                                            $('#normald').blur(function () {
+                                                DIVN();
+                                                nb();
+                                            })
+                                            $('#long_data_matrix').blur(function () {
+                                                DIVL();
+                                            })
+                                        })
+                                    </script>
+                                    <div class="col-md-12" style="margin-top: 10px " id="function">
+<textarea onblur="takeout(this),hqzf()" name="data_matrix" class="jq_watermark" onKeyUp="hqzf(1)" id="normald" rows="20"
+          cols="100"
+          style="height:218px;min-height:218px;width: 100%;margin-bottom: 20px;" placeholder="">ID	Pou5f1	Sox2	Gata2	cMyc	Tet1	Tet3
+Zygote	1	0.5	0.3	10.4	16	32
+2_cell	2	1	0.6	5.2	8	16
+4_cell	4	2	1.3	2.6	4	8
+8_cell	8	4	2.6	1.3	2	4
+Morula	16	8	5.2	0.6	1	2
+ICM	32	16	10.4	0.3	0.5	1
+</textarea>
+                                    </div>
+                                    <div class="col-md-12" style="margin-top: 10px;display: none " id="coor">
+<textarea onblur="takeout1(this),hqzf()" name="long_data_matrix" id="long_data_matrix" onKeyUp="hqzf(2)"
+          class="jq_watermark" rows="20" cols="100"
+          style=" height:218px;min-height:218px;width: 100%;margin-bottom: 20px;" placeholder="">Pos	Variable	value
+-5000	H3K27ac	9.05497
+-4000	H3K27ac	8.95497
+-3000	H3K27ac	8.25497
+-2000	H3K27ac	7.16265
+-1000	H3K27ac	3.55341
+0	H3K27ac	3.55030
+1000	H3K27ac	7.07502
+2000	H3K27ac	8.24328
+3000	H3K27ac	8.43869
+4000	H3K27ac	8.83869
+5000	H3K27ac	9.03869
+-5000	CTCF	8.05497
+-4000	CTCF	7.95497
+-3000	CTCF	7.25497
+-2000	CTCF	6.16265
+-1000	CTCF	2.55341
+0	CTCF	2.55030
+1000	CTCF	6.07502
+2000	CTCF	7.24328
+3000	CTCF	7.43869
+4000	CTCF	7.83869
+5000	CTCF	8.03869
+</textarea>
+                                    </div>
+                                </div>
+                                <br/>
+                                <br/>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--模块结束-->
+            <script src="/ImageGP/Public/assets/js/jquery.watermark.js"></script>
+            <!--模块开始2-->
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="panel panel-default collapsed rm">
+                        <div class="panel-heading">
+                            <div class="panel-options" style="text-decoration: none !important;width:100%;">
+                                <a href="#" data-toggle="panel"
+                                   style="text-decoration: none !important;width:100%;padding: 16px 9px;">
+                                    <h3 class="panel-title" style="display: block;float: left;color: #000000">Essential
+                                        parameters</h3>
+                                    <div style="display: block;width: 20px;float: right;">
+                                        <span class="collapse-icon">&ndash;</span>
+                                        <span class="expand-icon">+</span>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="panel-body">
+                            <div class="form-group">
+                                <div class="row" style="margin-left: 0px">
+                                    <label class="col-sm-3 " style="font-weight: 700;">X-axis type</label>
+                                    <div class="col-sm-4" style="text-align: left !important;">
+                                        <label>
+                                            <input class="checked-boom hh" type="radio" name="x_axis_type"
+                                                   value="string" checked>
+                                            Discrete variable</label>
+                                    </div>
+                                    <div class="col-sm-5" style="text-align: left !important;">
+                                        <label>
+                                            <input class="checked-boom gg" type="radio" name="x_axis_type"
+                                                   value="number"/>
+                                            Continuous variable</label>
+                                    </div>
+                                </div>
+                                <div class="form-group" style="margin:25px 0">
+                                    <label class="col-sm-3" style="font-weight: 700;">X-axis variable
+                                        <div class="xing">*</div>
+                                    </label>
+                                    <div class="col-sm-3">
+                                        <!--<input name="x_axis_name" type="text"  onkeyup = "ValidateValue(this),value=value.replace(/[\u4E00-\u9FA5]/g, '')"  onblur="ValidateValue(this),value=value.replace(/[\u4E00-\u9FA5]/g, '')"   required class="form-control hd bx"  placeholder="Pos" disabled="disabled"  data-placement="top"  tabindex="0"  data-toggle="popover" data-trigger="focus "  data-content="<div style='text-align:justify'>Ignored for normal matrix and must be set for long table format to allocate which column would be used as X-axis variable.</div>">-->
+                                        <select id="aselect" class="selectpicker getcol form-control" title="E.g. Pos"
+                                                disabled="disabled" name="x_axis_name" style="width: 100%;">
+                                            <option></option>
+                                        </select>
+                                    </div>
+                                    <label class="col-sm-3" style="font-weight: 700">X-axis variable order</label>
+                                    <div class="col-sm-3">
+                                        <select name="x_axis_order" disabled="disabled" class="form-control hd1 xlakz"
+                                                id="s2example" multiple placeholder="E.g. B, D, C, E"
+                                                data-placement="top" tabindex="0" data-toggle="popover"
+                                                data-trigger="hover"
+                                                data-content="<div style='text-align:justify'>Given a series of unique values from X-axis column to specify the order of each sub-variable. Default alphabet order. Only used when X-variable are set as strings.</div>">></select>
+                                    </div>
+                                </div>
+                                <div class="form-group" style="margin:25px 0">
+                                    <label class="col-sm-3" style="font-weight: 700;">Y-axis variable
+                                        <div class="xing">*</div>
+                                    </label>
+                                    <div class="col-sm-3">
+                                        <!--<input name="x_axis_name" type="text"  onkeyup = "ValidateValue(this),value=value.replace(/[\u4E00-\u9FA5]/g, '')"  onblur="ValidateValue(this),value=value.replace(/[\u4E00-\u9FA5]/g, '')"   required class="form-control hd bx"  placeholder="Pos" disabled="disabled"  data-placement="top"  tabindex="0"  data-toggle="popover" data-trigger="focus "  data-content="<div style='text-align:justify'>Ignored for normal matrix and must be set for long table format to allocate which column would be used as X-axis variable.</div>">-->
+                                        <select id="dselect" class="selectpicker getcol" title="E.g. value"
+                                                disabled="disabled" name="y_axis_name" style="width: 100%;">
+                                            <option></option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <style>
+                                    .xing {
+                                        float: right;
+                                        display: none;
+                                        font-size: 18px;
+                                        color: red;
+                                        margin-left: 6px;
+                                        line-height: 39px;
+                                        /*position: absolute;*/
+                                    }
+                                </style>
+                                <div class="form-group" style="margin:25px 0">
+                                    <label class="col-sm-3" style="font-weight: 700">Legend variable
+                                        <div class="xing">*</div>
+                                    </label>
+                                    <div class="col-sm-3">
+                                        <!--<input name="legend_variable" type="text"  onkeyup = "ValidateValue(this),value=value.replace(/[\u4E00-\u9FA5]/g, '')"  onblur="ValidateValue(this),value=value.replace(/[\u4E00-\u9FA5]/g, '')"   required  class="form-control hd bL"  placeholder="Variable"  disabled="disabled"  data-placement="top"  tabindex="0"  data-toggle="popover" data-trigger="focus "  data-content="<div style='text-align:justify'>Ignored for normal matrix and must be set for long table format using name of the column containing group information of each line.</div>" >-->
+                                        <select id="bselect" class="selectpicker getcol" title="E.g. Variable"
+                                                disabled="disabled" name="legend_variable" style="width: 100%;">
+                                            <option></option>
+                                        </select>
+                                    </div>
+                                    <script type="text/javascript">
+                                        jQuery(document).ready(function ($) {
+                                            $("#s2example, #s2example1, #s2example2, #s2example3").select2({
+                                                placeholder: '',
+                                                allowClear: true,
+                                                closeOnSelect: false,
+                                                theme: "classic"
+                                            }).on('select2-open', function () {
+                                                // Adding Custom Scrollbar
+                                                $(this).data('select2').results.addClass('overflow-hidden').perfectScrollbar();
+                                            });
+                                        });
+                                    </script>
+                                    <label class="col-sm-3" style="font-weight: 700">Legend variable order</label>
+                                    <div class="col-sm-3">
+                                        <select name="legend_order" disabled="disabled" class="form-control  xlbkz"
+                                                id="s2example1" multiple placeholder="E.g. H3K27ac, CTCF, P300"
+                                                data-placement="top" tabindex="0" data-toggle="popover"
+                                                data-trigger="focus "
+                                                data-content="<div style='text-align:justify'>Given a series of unique values from Legend column to specify the order of each line. Default alphabet order.</div>">></select>
+                                    </div>
+                                </div>
+                                <div class="form-group" style="margin:25px 0">
+                                    <label class="col-sm-3 " style="font-weight: 700">Color variable</label>
+                                    <div class="col-sm-3">
+                                        <!--<input name="color_variable" type="text"  onkeyup = "ValidateValue(this),value=value.replace(/[\u4E00-\u9FA5]/g, '')"  onblur="ValidateValue(this),value=value.replace(/[\u4E00-\u9FA5]/g, '')"  class="form-control hd" data-placement="top"  tabindex="0"   data-toggle="popover" data-trigger="focus "  data-content="<div style='text-align:justify'>Default same as legend variable. Only can be set when one wants multiple lines from same group have same colors. If set, this will be shown as legend.</div>"  placeholder="Default same as legend variable" disabled="disabled">-->
+                                        <select id="cselect" class="selectpicker getcol" name="color_variable"
+                                                style="width: 100%;">
+                                            <option></option>
+                                        </select>
+                                    </div>
+                                    <label class="col-sm-3" style="font-weight: 700">Color variable order</label>
+                                    <div class="col-sm-3">
+                                        <select name="color_order" disabled="disabled" class="form-control  xlckz"
+                                                id="s2example2" multiple data-placement="top" tabindex="0"
+                                                data-toggle="popover" data-trigger="focus "
+                                                data-content="<div style='text-align:justify'>Given a series of unique values from Color variable column to specify the order of each line. Default alphabet order.</div>"
+                                                placeholder="Default alphabet order">></select>
+                                    </div>
+                                </div>
+                                <style>
+                                    .red {
+                                        color: red !important;
+                                    }
+                                </style>
+                                <div class="form-group" style="margin:25px 0">
+                                    <label class="col-sm-3" style="font-weight: 700">Color list</label>
+                                    <div class="col-sm-3">
+                                        <script type="text/javascript">
+                                            jQuery(document).ready(function ($) {
+                                                $("#s2example3").select2({
+                                                    placeholder: 'Select country...',
+                                                    allowClear: true,
+                                                    closeOnSelect: false,
+                                                    minimumResultsForSearch: -1, // Hide the search bar
+                                                    formatResult: function (state) {
+                                                        return '<div style="background:url(/ImageGP/Public/assets/images/' + state.id + '.png) no-repeat center center;background-size:100%;display:inline-block;position:relative;width:20px;height:13px;margin-right: 5px;top:2px;"></div>'
+                                                            + state.text;
+                                                    }
+                                                }).on('select2-open', function () {
+                                                    // Adding Custom Scrollbar
+                                                    $("#s2example3").data('select2').results.addClass('overflow-hidden').perfectScrollbar();
+                                                });
+                                            });
+                                        </script>
+                                        <select class="form-control" id="s2example3" multiple name="color_list"
+                                                placeholder="E.g. red, olivedrab4, blue...">
+                                            <option value="white">white</option>
+                                            <option value="blue">blue</option>
+                                            <option value="red">red</option>
+                                            <option value="deepskyblue">deepskyblue</option>
+                                            <option value="cyan3">cyan3</option>
+                                            <option value="darkgoldenrod1">darkgoldenrod1</option>
+                                            <option value="azure3">azure3</option>
+                                            <option value="darkolivegreen1">darkolivegreen1</option>
+                                            <option value="gold">gold</option>
+                                            <option value="hotpink">hotpink</option>
+                                            <option value="coral1">coral1</option>
+                                            <option value="red4">red4</option>
+                                            <option value="olivedrab1">olivedrab1</option>
+                                            <option value="olivedrab4">olivedrab4</option>
+                                            <option value="plum">plum</option>
+                                            <option value="plum4">plum4</option>
+                                            <option value="purple">purple</option>
+                                            <option value="purple4">purple4</option>
+                                            <option value="orangered">orangered</option>
+                                            <option value="springgreen1">springgreen1</option>
+                                            <option value="springgreen4">springgreen4</option>
+                                            <option value="rosybrown1">rosybrown1</option>
+                                            <option value="slateblue1">slateblue1</option>
+                                            <option value="mediumvioletred">mediumvioletred</option>
+                                            <option value="sienna">sienna</option>
+                                            <option value="black">black</option>
+                                            <option value="slategray4">slategray4</option>
+                                            <option value="lightgoldenrod">lightgoldenrod</option>
+                                            <option value="maroon3">maroon3</option>
+                                            <option value="brown3">brown3</option>
+                                        </select>
+                                    </div>
+                                    <label class="col-sm-3 " style="font-weight: 700;">Color guide</label>
+                                    <div class="col-sm-3">
+                                        <div class="input-group">
+                                            <input type="text"
+                                                   onkeyup="ValidateValue(this),value=value.replace(/[\u4E00-\u9FA5]/g, '')"
+                                                   onblur="ValidateValue(this),value=value.replace(/[\u4E00-\u9FA5]/g, '')"
+                                                   class="form-control colorpicker" data-placement="top" tabindex="0"
+                                                   data-toggle="popover" data-trigger="focus "
+                                                   data-content="<div style='text-align:justify'>Only used for color selection. Color code should be filled in left textarea.</div>"
+                                                   data-format="hex" value="#5a3d3d"/>
+                                            <div class="input-group-addon">
+                                                <i class="color-preview"></i>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--模块结束-->
+            <!--模块开始5-->
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="panel panel-default  collapsed">
+                        <div class="panel-heading">
+                            <div class="panel-options" style="text-decoration: none !important;width:100%;">
+                                <a href="#" data-toggle="panel"
+                                   style="text-decoration: none !important;width:100%;padding: 16px 9px;">
+                                    <h3 class="panel-title" style="display: block;float: left;color: #000000">Data
+                                        preprocess</h3>
+                                    <div style="display: block;width: 20px;float: right;">
+                                        <span class="collapse-icon">&ndash;</span>
+                                        <span class="expand-icon">+</span>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="panel-body">
+                            <div class="form-group">
+                                <div class="row" style="margin-left: 0px">
+                                    <label class="col-sm-3 " style="font-weight: 700;">Y-axis value transform</label>
+                                    <div class="col-sm-4" style="text-align: left !important;">
+                                        <input value="raw" class="icheck-12" type="radio" id="minimal-radio-1-12"
+                                               name="y_value_type" checked>
+                                        <label>Raw</label>
+                                    </div>
+                                    <label>
+                                        <div class="col-sm-4" style="text-align: left !important;">
+                                            <input value="log2" tabindex="8" class="icheck-12" type="radio"
+                                                   name="y_value_type">
+                                            <label>Log2</label>
+                                        </div>
+                                        <div class="col-sm-4">
+                                            <input name="y_add" type="text"
+                                                   onkeyup="value=value.replace(/[^\d\.]/g, '')"
+                                                   onblur="value=value.replace(/[^\d\.]/g, '')" class="form-control"
+                                                   data-placement="top" style="width: 200px;margin-right: -61px"
+                                                   tabindex="0" data-toggle="popover" data-trigger="focus " value="1"
+                                                   placeholder=""
+                                                   data-content="<div style='text-align:justify'>Add a pseudo-count like 1 to avoid log operation on non-positive values like 0, -1.</div>">
+                                        </div>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--模块结束-->
+            <!--模块开始4-1-->
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="panel panel-default  collapsed">
+                        <div class="panel-heading">
+                            <div class="panel-options" style="text-decoration: none !important;width:100%;">
+                                <a href="#" data-toggle="panel"
+                                   style="text-decoration: none !important;width:100%;padding: 16px 9px;">
+                                    <h3 class="panel-title" style="display: block;float: left;color: #000000">
+                                        Layout</h3>
+                                    <div style="display: block;width: 20px;float: right;">
+                                        <span class="collapse-icon">&ndash;</span>
+                                        <span class="expand-icon">+</span>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="panel-body">
+                            <div class="form-group">
+                                <div class="row" style="margin:25px 0">
+                                    <label class="col-sm-3 " style="font-weight: 700;text-align:left">Legend
+                                        position</label>
+                                    <div class="col-sm-2" style="text-align: left !important;">
+                                        <input class="icheck-12" value="top" type="radio" name="legend_position">
+                                        <label>Top</label>
+                                    </div>
+                                    <div class="col-sm-2" style="text-align: left !important;">
+                                        <input value="bottom" class="icheck-12" type="radio" name="legend_position">
+                                        <label>Bottom</label>
+                                    </div>
+                                    <div class="col-sm-2" style="text-align: left !important;">
+                                        <input value="left" class="icheck-12" type="radio" name="legend_position">
+                                        <label>Left</label>
+                                    </div>
+                                    <div class="col-sm-2" style="text-align: left !important;">
+                                        <input value="right" class="icheck-12" type="radio" name="legend_position"
+                                               checked="checked">
+                                        <label>Right</label>
+                                    </div>
+                                    <label class="col-sm-3" id="yc" style="color: rgba(154, 61, 232, 0)!important;">Legend
+                                        position</label>
+                                    <div class="col-sm-2" style="text-align: left !important;margin-top: 24px" id="yc4">
+                                        <input value="none" class="icheck-12" type="radio" name="legend_position">
+                                        <label>None</label>
+                                    </div>
+                                    <div class="row" style="text-align: left  !important ;">
+                                        <label style="margin-top: 24px" id="yc3">
+                                            <div class="col-sm-12" id="yc2">
+                                                <input tabindex="8" value="legend_user" class="icheck-12" type="radio"
+                                                       name="legend_position">
+                                                <input style="width: 77px" name="x_y" type="text"
+                                                       onkeyup="ValidateValue(this),value=value.replace(/[\u4E00-\u9FA5]/g, '')"
+                                                       onblur="ValidateValue(this),value=value.replace(/[\u4E00-\u9FA5]/g, '')"
+                                                       class="form-control"
+                                                       data-placement="top" tabindex="0" data-toggle="popover"
+                                                       data-trigger="focus " value="0.8, 0.08"
+                                                       data-content="<div style='text-align:justify'>Customized position like (0.8, 0.08) places the center of legend at the right-bottom corner within plot.</div>">
+                                            </div>
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="row" style="margin:25px 0">
+                                    <label class="col-sm-3 " style="font-weight: 700;">Smooth line</label>
+                                    <div class="col-sm-2" style="text-align: left !important;">
+                                        <input value="n_smooth" class="icheck-12" type="radio" name="smooth_line"
+                                               checked="checked">
+                                        <label>No smooth</label>
+                                    </div>
+                                    <div class="col-sm-2" style="text-align: left !important;">
+                                        <input value="y_smooth" class="icheck-12" type="radio" name="smooth_line">
+                                        <label>Smooth</label>
+                                    </div>
+                                </div>
+                                <div class="form-group" style="margin:25px 0">
+                                    <label class="col-sm-3" style="font-weight: 700">X-tics rotation angle</label>
+                                    <div class="col-sm-3">
+                                        <input type="text"
+                                               onkeyup="ValidateValue(this),value=value.replace(/[\u4E00-\u9FA5]/g, '')"
+                                               onblur="ValidateValue(this),value=value.replace(/[\u4E00-\u9FA5]/g, '')"
+                                               oninput="aaa(this)"
+                                               class="form-control" name="xtics_angle"
+                                               placeholder="A number ranges from -90 to 90">
+                                    </div>
+                                </div>
+                                <div class="form-group" style="margin:25px 0">
+                                    <label class="col-sm-3" style="font-weight: 700">Line weight</label>
+                                    <div class="col-sm-3">
+                                        <input name="line_weight" type="text"
+                                               onkeyup="value=value.replace(/[^\d]/g, '')" class="form-control"
+                                               placeholder="An integer number">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--模块结束-->
+            <!--模块开始4-1-->
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="panel panel-default collapsed">
+                        <div class="panel-heading">
+                            <div class="panel-options" style="text-decoration: none !important;width:100%;">
+                                <a href="#" data-toggle="panel"
+                                   style="text-decoration: none !important;width:100%;padding: 16px 9px;">
+                                    <h3 class="panel-title" style="display: block;float: left;color: #000000">Add extra
+                                        elements</h3>
+                                    <div style="display: block;width: 20px;float: right;">
+                                        <span class="collapse-icon">&ndash;</span>
+                                        <span class="expand-icon">+</span>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="panel-body">
+                            <div class="form-group">
+                                <div class="form-group" style="margin:25px 0">
+                                    <label class="col-sm-3" style="font-weight: 700">Vertical line positions</label>
+                                    <div class="col-sm-3">
+                                        <input onkeyup="javascript:this.value=this.value.replace(/，/ig,','),ValidateValue(this),value=value.replace(/[\u4E00-\u9FA5]/g, '');"
+                                               name="v_line_position" class="form-control kz1" type="text"
+                                               data-placement="top" tabindex="0"
+                                               data-toggle="popover" data-trigger="focus "
+                                               data-content="<div style='text-align:justify'>A series of strings or numbers appeared at x-axis like (-1000, 0, 500) to specify the X-axis position of vertical lines.</div>"
+                                               placeholder="E.g. -1000, 0, 500">
+                                    </div>
+                                    <label class="col-sm-3" style="font-weight: 700">Vertical line labels</label>
+                                    <div class="col-sm-3">
+                                        <input onkeyup="javascript:this.value=this.value.replace(/，/ig,','),ValidateValue(this),value=value.replace(/[\u4E00-\u9FA5]/g, '');"
+                                               name="v_line_label" class="form-control jz1" disabled="disabled"
+                                               type="text" data-placement="top"
+                                               tabindex="0" data-toggle="popover" data-trigger="focus "
+                                               data-content="<div style='text-align:justify'>A series of strings to label each vertcal line like(-1 kb, TSS, +0.5 kb). Optional.</div> "
+                                               placeholder="E.g. -1 kb, TSS, +0.5 kb">
+                                    </div>
+                                </div>
+                                <div class="form-group" style="margin:25px 0">
+                                    <label class="col-sm-3" style="font-weight: 700">Horizontal line positions</label>
+                                    <div class="col-sm-3">
+                                        <input onkeyup="javascript:this.value=this.value.replace(/，/ig,','),ValidateValue(this),value=value.replace(/[\u4E00-\u9FA5]/g, '');"
+                                               name="h_line_position" class="form-control kz2" type="text"
+                                               data-placement="top" tabindex="0"
+                                               data-toggle="popover" data-trigger="focus "
+                                               data-content="<div style='text-align:justify'>A series of strings or numbers appeared at y-axis like (-1, 0, 1) to specify the Y-axis position of horizontal lines.</div>"
+                                               placeholder="E.g. -1, 0, 1">
+                                    </div>
+                                    <label class="col-sm-3" style="font-weight: 700">Horizontal line labels</label>
+                                    <div class="col-sm-3">
+                                        <input onkeyup="javascript:this.value=this.value.replace(/，/ig,','),ValidateValue(this),value=value.replace(/[\u4E00-\u9FA5]/g, '');"
+                                               name="h_line_label" class="form-control jz2" disabled="disabled"
+                                               type="text" data-placement="top"
+                                               tabindex="0" data-toggle="popover" data-trigger="focus "
+                                               data-content="<div style='text-align:justify'>A series of strings to label each horizontal line like (Minimum, Base, Maximum)</div>"
+                                               placeholder="E.g. Minimum, Base, Maximum">
+                                    </div>
+                                </div>
+                                <div class="form-group" style="margin:25px 0">
+                                    <label class="col-sm-3" style="font-weight: 700">Customized X-tics positions</label>
+                                    <div class="col-sm-3">
+                                        <input onkeyup="javascript:this.value=this.value.replace(/，/ig,','),ValidateValue(this),value=value.replace(/[\u4E00-\u9FA5]/g, '');"
+                                               name="xtics_position" class="form-control kz3" type="text"
+                                               placeholder="E.g. -5000, 0, 5000"
+                                               data-placement="top" tabindex="0" data-toggle="popover"
+                                               data-trigger="focus "
+                                               data-content="<div style='text-align:justify'>A series of strings or numbers appeared at x-axis positions like < -5000, 0, 5000 > to indicate where to add X-tics.</div>">
+                                    </div>
+                                    <label class="col-sm-3" style="font-weight: 700">Customized X-tics labels</label>
+                                    <div class="col-sm-3">
+                                        <input onkeyup="javascript:this.value=this.value.replace(/，/ig,','),ValidateValue(this),value=value.replace(/[\u4E00-\u9FA5]/g, '');"
+                                               name="xtics_label" class="form-control jz3" disabled="disabled"
+                                               type="text"
+                                               placeholder="E.g. -5 Kb, TSS, +5 Kb" data-placement="top" tabindex="0"
+                                               data-toggle="popover" data-trigger="focus "
+                                               data-content="<div style='text-align:justify'>A series of strings or numbers to label each X-tics.</div>">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--模块结束-->
+            <!--模块开始3-->
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="panel panel-default  collapsed">
+                        <div class="panel-heading">
+                            <div class="panel-options" style="text-decoration: none !important;width:100%;">
+                                <a href="#" data-toggle="panel"
+                                   style="text-decoration: none !important;width:100%;padding: 16px 9px;">
+                                    <h3 class="panel-title" style="display: block;float: left;color: #000000">Modify
+                                        plot titles</h3>
+                                    <div style="display: block;width: 20px;float: right;">
+                                        <span class="collapse-icon">&ndash;</span>
+                                        <span class="expand-icon">+</span>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="panel-body">
+                            <div class="form-group" style="margin:25px 0">
+                                <label class="col-sm-3 " style="font-weight: 700">Title</label>
+                                <div class="col-sm-8">
+                                    <input name="title"
+                                           onkeyup="ValidateValue(this),value=value.replace(/[\u4E00-\u9FA5]/g, '')"
+                                           onblur="ValidateValue(this),value=value.replace(/[\u4E00-\u9FA5]/g, '')"
+                                           type="text"
+                                           class="form-control"
+                                           placeholder="Picture title. Optional">
+                                </div>
+                            </div>
+                            <div class="form-group" style="margin:25px 0">
+                                <label class="col-sm-3 " style="font-weight: 700">X-axis title</label>
+                                <div class="col-sm-8">
+                                    <input name="x_axis_title" type="text"
+                                           onkeyup="ValidateValue(this),value=value.replace(/[\u4E00-\u9FA5]/g, '')"
+                                           onblur="ValidateValue(this),value=value.replace(/[\u4E00-\u9FA5]/g, '')"
+                                           class="form-control"
+                                           placeholder="A sentence describing what x-axis variable represents. Optional">
+                                </div>
+                            </div>
+                            <div class="form-group" style="margin:25px 0">
+                                <label class="col-sm-3 " style="font-weight: 700">Y-axis title</label>
+                                <div class="col-sm-8">
+                                    <input name="y_axis_title" type="text"
+                                           onkeyup="ValidateValue(this),value=value.replace(/[\u4E00-\u9FA5]/g, '')"
+                                           onblur="ValidateValue(this),value=value.replace(/[\u4E00-\u9FA5]/g, '')"
+                                           class="form-control"
+                                           placeholder="A sentence describing what y-axis value represents. Optional">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--模块结束-->
+            <!--模块开始6-->
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="panel panel-default collapsed">
+                        <div class="panel-heading">
+                            <div class="panel-options" style="text-decoration: none !important;width:100%;">
+                                <a href="#" data-toggle="panel"
+                                   style="text-decoration: none !important;width:100%;padding: 16px 9px;">
+                                    <h3 class="panel-title" style="display: block;float: left;color: #000000">Picture
+                                        attributes</h3>
+                                    <div style="display: block;width: 20px;float: right;">
+                                        <span class="collapse-icon">&ndash;</span>
+                                        <span class="expand-icon">+</span>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="panel-body">
+                            <label class="col-sm-3 " style="text-align:left;font-weight: 700;">Image width (cm)</label>
+                            <div class="col-sm-3">
+                                <input name="image_width" type="text" onkeyup="value=value.replace(/[^\d\.]/g, '')"
+                                       onblur="value=value.replace(/[^\d\.]/g, '')" class="form-control"
+                                       placeholder="A number larger than 6">
+                            </div>
+                            <label class="col-sm-3 " style="text-align: center;font-weight: 700;">Image height
+                                (cm)</label>
+                            <div class="col-sm-3">
+                                <input name="image_height" type="text" onkeyup="value=value.replace(/[^\d\.]/g, '')"
+                                       onblur="value=value.replace(/[^\d\.]/g, '')" class="form-control"
+                                       placeholder="A number larger than 6">
+                            </div>
+                            <br/>
+                            <br/>
+                            <div class="row" style="margin:25px 0">
+                                <label class="col-sm-3 " style="font-weight: 700;">Color mode</label>
+                                <div class="col-sm-4" style="text-align: left !important;">
+                                    <input value="rgb" class="icheck-12" type="radio" name="color_mode"
+                                           checked="checked">
+                                    <label>RGB</label>
+                                </div>
+                                <div class="col-sm-5" style="text-align: left !important;">
+                                    <input value="cmyk" class="icheck-12" type="radio" name="color_mode">
+                                    <label>CMYK (Some journals want CMYK mode)</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--模块结束-->
+            <div class="row">
+                <div class="col-sm-3 col-md-offset-9" style="float:right;">
+                    <button class="hvr-float-shadow" id="ceshi" type="button"
+                            style="float:right;background: rgba(255, 0, 0, 0);border: 0 !important;">PLOT
+                    </button>
+                </div>
+                <div style="clear:both"></div>
+            </div>
+            <!--模块结束-->
+        </form>
+        <!--模块开始40-->
+        <div class="row" id="finalres">
+            <div class="col-sm-12">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <div class="panel-options" style="text-decoration: none !important;width:100%;">
+                            <a href="#" data-toggle="panel"
+                               style="text-decoration: none !important;width:100%;padding: 16px 9px;">
+                                <h3 class="panel-title" style="display: block;float: left;color: #000000">Plot area</h3>
+                                <div style="display: block;width: 20px;float: right;">
+                                    <span class="collapse-icon">&ndash;</span>
+                                    <span class="expand-icon">+</span>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="panel-body">
+                        <div style="width: 100%;height: 500px">
+                            <div id="logstr"></div>
+                            <!--<div class="centers">-->
+                            <!--<img  alt="易汉博生物信息在线作图 | Line plot | 线图"  src="" style="width:100%;height:100%;display:none" id="pngadd"/>-->
+                            <!--</div>-->
+                            <section class="gallery-env">
+                                <div class="album-image">
+                                    <a href="#" class="thumb" data-action="edit">
+                                        <img alt="易汉博生物信息在线作图 | Line plot | 线图" src="" class="img-responsive pngadd"
+                                             style="width:100%;height:100%;display:none"/>
+                                        <p class="ptext" style="text-align: center;display: none">Click the image to
+                                            enlarge.</p>
+                                    </a>
+                                </div>
+                            </section>
+                            <div class="col-sm-12" style="display:none" id="qipa">
+                                <div class="centers1">
+                                    <a href="" id="pdfadd" target="_blank" style="color: #ffffff;float: right">
+                                        <button class="hvr-float-shadow" type="button"
+                                                style="background: rgba(255, 0, 0, 0);border: 0 !important;background:  #ff6e17 !important;width: 100% !important;">
+                                            <i class="fa-download"></i>&nbsp;&nbsp;Download PDF file
+                                        </button>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script type="text/javascript">
+            $(function () {
+                $('#ceshi').click(function () {
+                    $('.layui-layer-content').css("display", "none");
+                    if (!min1() && $('.WF').prop("checked")) {
+                        return false;
+                    } else if (!min2() && $('.LF').prop("checked")) {
+                        return false;
+                    }
+                    if (!DIVL() || !DIVN()) {
+                        return false;
+                    }
+                    if (!sameb() && $('.LF').prop("checked")) {
+                        return false;
+                    }
+                    if (!same() && $('.WF').prop("checked")) {
+                        return false;
+                    }
+                    if (!nb()) {
+                        return false;
+                    }
+                    //
+                    // //判断数据是否合法
+                    // if (!fovv()) {
+                    //     return false;
+                    // }
+                    //
+                    // //判断每个行的列是否正常
+                    // if (!Judgeline()) {
+                    //     return false;
+                    // }
+                    if (!Judgeline()) {
+                        return false;
+                    } else if (!fovv()) {
+                        return false;
+                    }
+                    var count1 = getcount();
+                    var count2 = $('#s2example3').select2("data").length;
+                    //console.log(count1);
+                    //console.log(count2);
+                    if (count2 != 0) {
+                        if (count1 != count2) {
+                            if (count1 == false) {
+                                if (count2 != 0) {
+                                    $('#s2example3').select2('val', '');
+                                }
+                                layui.use('layer', function () {
+                                    var layer = layui.layer;
+                                    layer.msg('Please select <em>Legend variable</em> first.', {
+                                        time: 888888,
+                                        btn: ['OK']
+                                    });
+                                });
+                                return false;
+                            } else {
+                                layui.use('layer', function () {
+                                    var layer = layui.layer;
+                                    layer.msg('<b>' + count1 + ' colors </b> are needed for <em>Color list</em> drop-down box.', {
+                                        time: 888888,
+                                        btn: ['OK']
+                                    });
+                                });
+                                return false;
+                            }
+                        }
+                    }
+                    var all = {};
+                    $("input").each(function () {
+                        var sem = $(this).attr('name');
+                        all[sem] = $(this).val();
+                    });
+                    all['matrix_format'] = $('input[name="matrix_format"]:checked').val();
+                    if (all['matrix_format'] == 'long') {
+                        var vvb = $('#long_data_matrix').attr('name');
+                        all[vvb] = $('#long_data_matrix').val();
+                        var vvc = $('#aselect').attr('name');
+                        all[vvc] = $("#aselect").find("option:selected").val();
+                        var vvd = $('#bselect').attr('name');
+                        all[vvd] = $("#bselect").find("option:selected").val();
+                        var vve = $('#cselect').attr('name');
+                        all[vve] = $("#cselect").find("option:selected").val();
+                        var vvf = $('#dselect').attr('name');
+                        all[vvf] = $("#dselect").find("option:selected").val();
+                        all['x_axis_order'] = xiaoming('s2example');
+                        all['legend_order'] = xiaoming('s2example1');
+                        all['color_order'] = xiaoming('s2example2');
+                    } else {
+                        var vva = $('#normald').attr('name');
+                        all[vva] = $('#normald').val();
+                    }
+                    all['x_axis_type'] = $('input[name="x_axis_type"]:checked').val();
+                    all['legend_position'] = $('input[name="legend_position"]:checked').val();
+                    all['smooth_line'] = $('input[name="smooth_line"]:checked').val();
+                    all['y_value_type'] = $('input[name="y_value_type"]:checked').val();
+                    all['color_mode'] = $('input[name="color_mode"]:checked').val();
+                    var avv = $('#s2example3').attr('name');
+                    all[avv] = xiaoming('s2example3');
+
+
+                    function xiaoming(a) {
+                        var tmpaa = $("#" + a).select2("data");
+                        var tmpa = '';
+                        for (var i = 0; i < tmpaa.length; i++) {
+                            if (i == 0) {
+                                tmpa = tmpaa[i]['text'];
+                            } else {
+                                tmpa += ',' + tmpaa[i]['text'];
+                            }
+                        }
+                        return tmpa;
+                    }
+
+                    //JSON.stringify(all);
+                    //console.log(all[avv])
+                    if ($('#aselect').val() == "" && $('.LF').prop("checked")) {
+                        $(".bootstrap-select > .dropdown-toggle:first").focus().css("background-color", "#ffff85");
+                        layui.use('layer', function () {
+                            var layer = layui.layer;
+                            layer.msg('Please fill in the <b style="color:yellow;">*</b> required option.', {
+                                time: 888888,
+                                btn: ['OK']
+                            });
+                        });
+                        return false;
+                    }
+                    if ($('#dselect').val() == "" && $('.LF').prop("checked")) {
+                        $(".bootstrap-select > .dropdown-toggle:eq(1)").focus().css("background-color", "#ffff85");
+                        layui.use('layer', function () {
+                            var layer = layui.layer;
+                            layer.msg('Please fill in the <b style="color:yellow;">*</b> required option.', {
+                                time: 888888,
+                                btn: ['OK']
+                            });
+                        });
+                        return false;
+                    }
+                    if ($('#bselect').val() == "" && $('.LF').prop("checked")) {
+                        $(".bootstrap-select > .dropdown-toggle:eq(2)").focus().css("background-color", "#ffff85");
+                        layui.use('layer', function () {
+                            var layer = layui.layer;
+                            layer.msg('Please fill in the <b style="color:yellow;">*</b> required option.', {
+                                time: 888888,
+                                btn: ['OK']
+                            });
+                        });
+                        return false;
+                    }
+                    // if ($('#cselect').val() == "" && $('.LF').prop("checked")) {
+                    //     $(".bootstrap-select > .dropdown-toggle:eq(3)").focus().css("background-color", "#ffff85");
+                    //
+                    // }
+                    layui.use('layer', function () {
+                        var layer = layui.layer;
+                        var index = layer.load();
+                    });
+                    $.ajax({
+                        url: "/ImageGP/index.php/Home/Index/Lineplot.html",
+                        type: "post",
+                        traditional: true,
+                        data: all,
+                        dataType: "json",
+                        success: function (sdata) {
+                            layui.use('layer', function () {
+                                var layer = layui.layer;
+                                layer.closeAll('loading');
+                            });
+                            var ppt = $("#finalres").offset().top;
+                            $("html, body").animate({scrollTop: ppt}, 30);
+                            if (('pngadd' in sdata) && ('pdfadd' in sdata)) {
+                                $('.pngadd').css('display', 'block');
+                                $('.ptext').css('display', 'block');
+                                $('.pngadd').attr('src', "/ImageGP/Public/" + sdata['pngadd']);
+                                $('#qipa').css('display', 'block');
+                                $('#pdfadd').attr('href', '/ImageGP/Public/' + sdata['pdfadd']);
+                                $('#logstr').text('');
+                            }
+                            if ('logstr' in sdata) {
+                                $('#logstr').html(sdata['logstr']);
+                                $('.pngadd').css('display', 'none');
+                                $('.ptext').css('display', 'none');
+                                $('.pngadd').attr('src', "");
+                                $('#qipa').css('display', 'none');
+                                $('#pdfadd').attr('href', '');
+                            }
+                        }, error: function () {
+                            alert(222);
+                        }
+                    })
+                })
+            })
+        </script>
+        <!--公共foot尾部-->
+        <footer class="main-footer sticky footer-type-1">
+
+    <div class="footer-inner">
+
+
+        <div id="map" style="position: relative">
+
+            <a href="https://www.revolvermaps.com/?target=enlarge&i=5nn5d3nw217" target="_blank"
+               style="display:block;background: rgba(255, 255, 255, 0);height:22px;width: 120px;z-index: 9999;position: absolute"></a>
+
+
+            <script type="text/javascript" src="//rf.revolvermaps.com/0/0/3.js?i=5nn5d3nw217&amp;b=1&amp;s=0&amp;m=2&amp;cl=ffffff&amp;co=010020&amp;cd=aa0000&amp;v0=60&amp;v1=60&amp;r=1" async="async"></script>
+            <br>
+
+        </div>
+
+        <div style="text-align: center"><b>Feedback email: <a href="mailto:vip@ehbio.com">vip@ehbio.com</a></b></div>
+        <div class="go-up">
+            <a href="#" rel="go-top">
+                <i class="fa-angle-up"></i>
+            </a>
+
+        </div>
+
+    </div>
+
+</footer>
+
+    </div>
+</div>
+<script type="text/javascript">
+    // Sample Javascript code for this page
+    jQuery(document).ready(function ($) {
+        // Sample Select all images
+        $("#select-all").on('change', function (ev) {
+            var is_checked = $(this).is(':checked');
+            $(".album-image input[type='checkbox']").prop('checked', is_checked).trigger('change');
+        });
+        // Edit Modal
+        $('.gallery-env a[data-action="edit"]').on('click', function (ev) {
+            ev.preventDefault();
+            $("#gallery-image-modal").modal('show');
+        });
+        // Delete Modal
+        $('.gallery-env a[data-action="trash"]').on('click', function (ev) {
+            ev.preventDefault();
+            $("#gallery-image-delete-modal").modal('show');
+        });
+        // Sortable
+        $('.gallery-env a[data-action="sort"]').on('click', function (ev) {
+            ev.preventDefault();
+            var is_sortable = $(".album-images").sortable('instance');
+            if (!is_sortable) {
+                $(".gallery-env .album-images").sortable({
+                    items: '> div'
+                });
+                $(".album-sorting-info").stop().slideDown(300);
+            }
+            else {
+                $(".album-images").sortable('destroy');
+                $(".album-sorting-info").stop().slideUp(300);
+            }
+        });
+    });
+</script>
+<div class="modal fade" id="gallery-image-modal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-gallery-image">
+                <img alt="易汉博生物信息在线作图 | Line plot | 线图" src="" class="img-responsive pngadd" style="width:auto !important;
+        margin-left: auto !important;
+        margin-right: auto !important;"/>
+            </div>
+            <div class="modal-footer modal-gallery-top-controls">
+                <a href="#" data-toggle="tooltip"
+                   data-placement="right"
+                   title="Click here or regions outside the picture or press ESC to return.">
+                    <button type="button" class="btn btn-xs btn-white" data-dismiss="modal">Close</button>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+<link rel="stylesheet" href="/ImageGP/Public/assets/js/daterangepicker/daterangepicker-bs3.css">
+<link rel="stylesheet" href="/ImageGP/Public/assets/js/select2/select2.css">
+<link rel="stylesheet" href="/ImageGP/Public/assets/js/select2/select2-bootstrap.css">
+<link rel="stylesheet" href="/ImageGP/Public/assets/js/multiselect/css/multi-select.css">
+<link rel="stylesheet" href="/ImageGP/Public/assets/js/icheck/skins/all.css">
+<script src="/ImageGP/Public/assets/js/bootstrap.min.js"></script>
+<script src="/ImageGP/Public/assets/js/TweenMax.min.js"></script>
+<script src="/ImageGP/Public/assets/js/resizeable.js"></script>
+<script src="/ImageGP/Public/assets/js/joinable.js"></script>
+<script src="/ImageGP/Public/assets/js/xenon-api.js"></script>
+<script src="/ImageGP/Public/assets/js/xenon-toggles.js"></script>
+<script src="/ImageGP/Public/assets/js/moment.min.js"></script>
+<script src="/ImageGP/Public/assets/js/daterangepicker/daterangepicker.js"></script>
+<script src="/ImageGP/Public/assets/js/datepicker/bootstrap-datepicker.js"></script>
+<script src="/ImageGP/Public/assets/js/timepicker/bootstrap-timepicker.min.js"></script>
+<script src="/ImageGP/Public/assets/js/colorpicker/bootstrap-colorpicker.min.js"></script>
+<script src="/ImageGP/Public/assets/js/select2/select2.min.js"></script>
+<script src="/ImageGP/Public/assets/js/jquery-ui/jquery-ui.min.js"></script>
+<script src="/ImageGP/Public/assets/js/selectboxit/jquery.selectBoxIt.min.js"></script>
+<script src="/ImageGP/Public/assets/js/tagsinput/bootstrap-tagsinput.min.js"></script>
+<script src="/ImageGP/Public/assets/js/typeahead.bundle.js"></script>
+<script src="/ImageGP/Public/assets/js/handlebars.min.js"></script>
+<script src="/ImageGP/Public/assets/js/multiselect/js/jquery.multi-select.js"></script>
+<script src="/ImageGP/Public/assets/js/icheck/icheck.min.js"></script>
+<script src="/ImageGP/Public/assets/js/xenon-custom.js"></script>
+</body>
+<script src="/ImageGP/Public/assets/js/Lineplot1.js"></script>
+<script src="/ImageGP/Public/assets/js/All.js"></script>
+</html>
